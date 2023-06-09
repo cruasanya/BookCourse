@@ -7,20 +7,19 @@
 
 import SwiftUI
 
+
 struct ContentView: View {
+    @State private var  selectedTab  = 9
     var body: some View {
-        TabView {
-            WelcomeView()
-//                .tabItem {Text("Welcome")}   we have scroll points
-            ForEach(Exercise.exercises.indices,id: \.self){index in
-                ExerciseView(index: index)
-            }
+      TabView(selection: $selectedTab) {
+        WelcomeView(selectedTab: $selectedTab)  // 1
+          .tag(9)  // 2
+        ForEach(Exercise.exercises.indices, id: \.self) { index in
+          ExerciseView( index: index,selectedTab: $selectedTab)
+            .tag(index)  // 3
         }
-        .padding()
-//        .tabViewStyle(PageTabViewStyle())
-//        .indexViewStyle(
-//            PageIndexViewStyle(backgroundDisplayMode: .always)) it os for dotted list
-        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+    }
+      .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
     }
 }
 
